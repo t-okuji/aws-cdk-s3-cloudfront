@@ -1,8 +1,10 @@
-# Welcome to your CDK TypeScript project
+# Deploy S3 and CloudFront for Static website using AWS CDK v2
 
-This is a blank project for CDK development with TypeScript.
+This repository is AWS CDK sample for Static website hosting.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Architecture Diagram
+
+![s3-cloudfront-diagram](https://github.com/t-okuji/my-astro-blog/assets/43983351/c036d400-7cea-4891-806a-3f19e8397752)
 
 ## Useful commands
 
