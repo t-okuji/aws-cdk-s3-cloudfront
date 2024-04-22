@@ -14,6 +14,16 @@ export class S3CloudfrontStaticWebsiteStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
+    // Cloudfront Distribution (https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront.Distribution.html)
+    const distribution = new cloudfront.Distribution(
+      this,
+      "S3CloudfrontStaticWebsiteDistribution",
+      {
+        defaultBehavior: { origin: new origins.S3Origin(bucket) },
+        defaultRootObject: "index.html",
+      }
+    );
+
     // Origin access control (https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront.CfnOriginAccessControl.html)
     const cfnOriginAccessControl = new cloudfront.CfnOriginAccessControl(
       this,
@@ -25,16 +35,6 @@ export class S3CloudfrontStaticWebsiteStack extends cdk.Stack {
           signingProtocol: "sigv4",
           signingBehavior: "always",
         },
-      }
-    );
-
-    // Cloudfront Distribution (https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront.Distribution.html)
-    const distribution = new cloudfront.Distribution(
-      this,
-      "S3CloudfrontStaticWebsiteDistribution",
-      {
-        defaultBehavior: { origin: new origins.S3Origin(bucket) },
-        defaultRootObject: "index.html",
       }
     );
 
