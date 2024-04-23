@@ -14,12 +14,32 @@ export class S3CloudfrontStaticWebsiteStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
+    // CloudFront Function (https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront-readme.html#cloudfront-function)
+    const cloudfrontFunction = new cloudfront.Function(
+      this,
+      "S3CloudfrontStaticWebsiteFunction",
+      {
+        code: cloudfront.FunctionCode.fromFile({
+          filePath: "./functions/cloudfront-basic-auth.js",
+        }),
+        runtime: cloudfront.FunctionRuntime.JS_2_0,
+      }
+    );
+
     // Cloudfront Distribution (https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront.Distribution.html)
     const distribution = new cloudfront.Distribution(
       this,
       "S3CloudfrontStaticWebsiteDistribution",
       {
-        defaultBehavior: { origin: new origins.S3Origin(bucket) },
+        defaultBehavior: {
+          origin: new origins.S3Origin(bucket),
+          functionAssociations: [
+            {
+              function: cloudfrontFunction,
+              eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+            },
+          ],
+        },
         defaultRootObject: "index.html",
       }
     );
