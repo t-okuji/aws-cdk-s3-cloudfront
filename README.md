@@ -1,6 +1,6 @@
 # Deploy S3 and CloudFront for Static website using AWS CDK v2
 
-This repository is AWS CDK sample for Static website hosting.
+This repository is AWS CDK sample for Static website hosting. (with Basic Authentication)
 
 ## Architecture Diagram
 
@@ -15,3 +15,9 @@ This repository is AWS CDK sample for Static website hosting.
 - `pnpm dlx cdk deploy` deploy this stack to your default AWS account/region
 - `pnpm dlx cdk diff` compare deployed stack with current state
 - `pnpm dlx cdk synth` emits the synthesized CloudFormation template
+
+## My blog
+
+https://www.notecle.com/blog/s3-cloudfront-cdk/
+<br>
+https://www.notecle.com/blog/s3-cloudfront-basic-authentication/
